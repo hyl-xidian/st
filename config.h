@@ -140,7 +140,7 @@ static unsigned int defaultrcs = 256;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 2;
+static unsigned int cursorshape = 7;
 
 /*
  * Default columns and rows numbers
@@ -188,8 +188,20 @@ static MouseShortcut mshortcuts[] = {
 #define MODKEY Mod1Mask
 #define TERMMOD (ControlMask|ShiftMask)
 
+// from @LukeSmithxyz
+static char *openurlcmd[] = { "/bin/sh", "-c",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)'| uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Follow which url?' -l 10 | xargs -r xdg-open",
+    "externalpipe", NULL };
+static char *copyurlcmd[] = { "/bin/sh", "-c",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard",
+    "externalpipe", NULL };
+static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
+
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
+	{ Mod1Mask,             XK_o,           externalpipe,   {.v = openurlcmd } },
+//	{ Mod1Mask,             XK_y,           externalpipe,   {.v = copyurlcmd } },
+//	{ Mod1Mask,             XK_o,           externalpipe,   {.v = copyoutput } },
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
@@ -206,7 +218,7 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,               XK_j,           kscrolldown,    {.i =  1} },
 	{ MODKEY|ControlMask,   XK_k,           kscrollup,      {.i = -1} },
 	{ MODKEY|ControlMask,   XK_j,           kscrolldown,    {.i = -1} },
-	{ MODKEY,               XK_o,           copyurl,        {.i =  0} },
+	{ MODKEY,               XK_y,           copyurl,        {.i =  0} },
 };
 
 /*
