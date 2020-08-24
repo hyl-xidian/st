@@ -5,6 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
+//static char *font = "SauceCodePro Nerd Font Mono:pixelsize=16:antialias=true:autohint=true";
 static char *font = "Source Code Pro:pixelsize=24:antialias=true:autohint=true";
 static int borderpx = 2;
 
@@ -201,7 +202,7 @@ static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
 	{ Mod1Mask,             XK_o,           externalpipe,   {.v = openurlcmd } },
 //	{ Mod1Mask,             XK_y,           externalpipe,   {.v = copyurlcmd } },
-//	{ Mod1Mask,             XK_o,           externalpipe,   {.v = copyoutput } },
+	{ Mod1Mask,             XK_c,           externalpipe,   {.v = copyoutput } },
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
